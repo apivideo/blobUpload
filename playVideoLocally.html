@@ -1,0 +1,30 @@
+<html>
+
+
+<body>
+	Add a video here:
+	<br>
+	<input type="file" id="video-url-example">
+	<br>
+	..and it will playback here, without any upload:
+	<br>
+	<div id="video-container" style="width: 50%"></div>
+
+	<script>
+	  const input = document.querySelector('#video-url-example');
+	  
+	  input.addEventListener('change', () => {
+	    const file = input.files[0];
+	    const url = URL.createObjectURL(file);
+
+	    document.querySelector('#video-container').innerHTML = `
+	      <video autoplay loop width="500" src="${url}" />
+	    `;
+	  });
+	</script>
+	
+	
+	
+</body>
+
+</html>
