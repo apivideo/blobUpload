@@ -15,12 +15,9 @@
 	<script>
 	  const input = document.querySelector('#video-url-example');
 	  const url ="https://sandbox.api.video/upload?token=to1R5LOYV0091XN3GQva27OS";
-	  var chunkCounter;
+	  var chunkCounter =0;
 	  //break into 1 MB chunks for demo purposes
-	  const chunkSize = 100000000;
-	  
-	  
-	  
+	  const chunkSize = 1000000;  
 	  var videoId = "";
 	  var playerUrl = "";
 	  
@@ -29,11 +26,8 @@
 	    const file = input.files[0];
 	    var numberofChunks = Math.ceil(file.size/chunkSize);
 		document.getElementById("video-information").innerHTML = "There will be " + numberofChunks + " chunks uploaded."
-		
-		
-		chunkCounter =0;
 		var start =0; 
-		var chunkEnd = start + chunkSize - 1;
+		var chunkEnd = start + chunkSize;
 		//upload the first chunk to get the videoId
 		createChunk(videoId, start);
 		
@@ -62,24 +56,25 @@
 		
 		function uploadChunk(chunkForm, start, chunkEnd){
 			var oReq = new XMLHttpRequest();
-			oReq.upload.addEventListener("progress", updateProgress);
-			function updateProgress (oEvent) {
-			  console.log ("progress");
-			  if (oEvent.lengthComputable) {  
-			    var percentComplete = Math.round(oEvent.loaded / oEvent.total * 100,3);
-			    document.getElementById("chunk-information").innerHTML = "Chunk # " + chunkCounter + " is " + percentComplete + "% uploaded";
-			//	console.log (percentComplete);
-				// ...
-			  } else {
-				  console.log ("not computable");
-			    // Unable to compute progress information since the total size is unknown
-			  }
-			}	
+			oReq.upload.addEventListener("progress", updateProgress);	
 			oReq.open("POST", url, true);
 			var blobEnd = chunkEnd-1;
 			var contentRange = "bytes "+ start+"-"+ blobEnd+"/"+file.size;
 			oReq.setRequestHeader("Content-Range",contentRange);
 			console.log("Content-Range", contentRange);
+  			function updateProgress (oEvent) {
+  			    if (oEvent.lengthComputable) {  
+  			    var percentComplete = Math.round(oEvent.loaded / oEvent.total * 100);
+				
+  				var totalPercentComplete = Math.round((chunkCounter -1)/numberofChunks*100 +percentComplete/numberofChunks);
+  			    document.getElementById("chunk-information").innerHTML = "Chunk # " + chunkCounter + " is " + percentComplete + "% uploaded. Total uploaded: " + totalPercentComplete +"%";
+  			//	console.log (percentComplete);
+  				// ...
+  			  } else {
+  				  console.log ("not computable");
+  			    // Unable to compute progress information since the total size is unknown
+  			  }
+  			}
 			oReq.onload = function (oEvent) {
 			               // Uploaded.
 							console.log("uploaded chunk" );
@@ -91,27 +86,23 @@
 							
 							//now we have the video ID - loop through and add the remaining chunks
 							//we start one chunk in, as we have uploaded the first one.
-							//for(chunkStart = chunkSize; chunkStart<file.size; chunkStart+= chunkSize){
-							
-
-								//next chunk starts at + chunkSize from start
-								start += chunkSize;	
+							//next chunk starts at + chunkSize from start
+							start += chunkSize;	
 							//if start is smaller than file size - we have more to still upload
 							if(start<file.size){
-
 								//create the new chunk
 								createChunk(videoId, start);
 							}
 							else{
-								
 								//the video is fully uploaded. there will now be a url in the response
 								playerUrl = resp.assets.player;
 								console.log("all uploaded! Watch here: ",playerUrl ) ;
-								
+								document.getElementById("video-information").innerHTML = "all uploaded! Watch the video <a href=\'" + playerUrl +"\' target=\'_blank\'>here</a>" ;
 							}
 							
 			  };
 			  oReq.send(chunkForm);
+	
 			
 			
 		}
