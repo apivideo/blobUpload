@@ -1,0 +1,56 @@
+body {background-color: white;
+    color:white;
+    width: 100%;
+    text-align: center;
+    
+  }
+  
+#action__upload{
+    margin: auto;
+    text-align: center;
+    width: 50%;
+    height: 30%; 
+    padding:10px;
+    border: 1px dashed gray;
+   
+  }
+  #uploadFile__icon{
+    margin: auto;
+    vertical-align: center;
+    padding: 20px;
+    text-align: center;
+  
+  }
+  #video-file-label{
+    background-color: #fa5B30;
+    width:50%;
+    height: 30%;
+    margin: auto;
+    display: inline-block;
+    text-align: center;
+    border-radius: 25px;
+    padding-top: 30px;
+    font-size: x-large;
+  }
+  #video-information{
+    width:50%;
+    height: 10%;
+    margin: auto;
+    text-align: center;
+    border-radius: 25px;
+    padding-top: 30px;
+    color: #fa5B30;
+    font-size: x-large;
+
+  }
+  #chunk-information{
+    width:50%;
+    height: 10%;
+    margin: auto;
+    text-align: center;
+    border-radius: 25px;
+    padding-top: 30px;
+    color: #fa5B30;
+    font-size: x-large;
+
+  }

@@ -1,0 +1,36 @@
+<html>
+
+
+<body>
+	
+	<br>
+	<div id="video-container" style="width: 50%"></div>
+    <div id="video"> 
+		<video id="videoTag" preload="auto" width="500" src="https://cdn.api.video/vod/vi1FBKkaYe5Y2L9wNbGDYztl/mp4/720/source.mp4" />
+	
+	</div>
+	
+	
+	
+	<script>
+	
+	//  const input = document.getElementById('videoTag').src;
+	 // console.log(input);
+	
+	    const file = document.getElementById('videoTag').src;
+	    const url = URL.createObjectURL(file);
+			console.log(file);
+			console.log(url);
+			
+			
+	    document.querySelector('#video-container').innerHTML = `
+	      <video autoplay loop width="500" src="${url}" />
+	    `;
+
+	</script>
+	
+	
+	
+</body>
+
+</html>
