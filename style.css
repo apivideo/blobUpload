@@ -54,3 +54,8 @@ body {background-color: white;
     font-size: x-large;
 
   }
+  #footer{
+    font-size: large;
+    color: black;
+    padding:10px;
+  }
