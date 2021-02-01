@@ -4,7 +4,18 @@ body {background-color: white;
     text-align: center;
     
   }
-  
+  #title{
+    width:50%;
+    
+    margin: auto;
+    text-align: center;
+    border-radius: 25px;
+    padding-top: 30px;
+    color: #fa5B30;
+    font-size: x-large;
+
+  }
+
 #action__upload{
     margin: auto;
     text-align: center;
@@ -44,6 +55,17 @@ body {background-color: white;
 
   }
   #chunk-information{
+    width:50%;
+    height: 10%;
+    margin: auto;
+    text-align: center;
+    border-radius: 25px;
+    padding-top: 30px;
+    color: #fa5B30;
+    font-size: x-large;
+
+  }
+  #description{
     width:50%;
     height: 10%;
     margin: auto;
