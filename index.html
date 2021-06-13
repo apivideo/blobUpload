@@ -57,10 +57,11 @@
 	
 	<script>
 	  const input = document.querySelector('#video-file');
-	  const url ="https://ws.api.video/upload?token=to1YSecZMRjrvDGxSfVFTNhG";
+	  //changed to sandbox, becuase we cannot have nice things
+	  const url ="https://ws.api.video/upload?token=to5PoOjCz98FdLGnsrFflnYo";
 	  var chunkCounter =0;
 	  //break into 1 MB chunks for demo purposes
-	  const chunkSize = 1000000;  
+	  const chunkSize = 100000000;  
 	  var videoId = "";
 	  var playerUrl = "";
 
