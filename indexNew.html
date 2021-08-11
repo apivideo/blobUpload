@@ -1,0 +1,93 @@
+<html>
+<head>
+	<title>Upload a video</title>
+	<link rel="stylesheet" href="style.css">
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N9E9YP1HGF"></script>
+	<script src="https://unpkg.com/@api.video/video-uploader" defer></script>
+	<script>
+  		window.dataLayer = window.dataLayer || [];
+  		function gtag(){dataLayer.push(arguments);}
+  		gtag('js', new Date());
+  		gtag('config', 'G-N9E9YP1HGF');
+	</script>
+</head>
+
+<body>
+	<p id="title">
+		Upload a video to api.video
+	</p>
+	<br>
+	<div id="action__upload">
+	
+		<img id="uploadFile__icon" draggable="false" src = "upload.png">
+		<br/>
+		<label for="video-file" id="video-file-label">
+			Click here to upload a video
+		</label>
+		<input type="file" id="video-file" style='display:none'>
+
+	</div>
+	<br>	
+	<br>
+	<div id="video-information" style="width: 50%"></div>
+	<div id="chunk-information" style="width: 50%"></div>
+	<div id="description">
+		Quickly upload *any* size video to <a href='https://api.video'>api.video</a> using a delegated token. Upon upload, you'll have a link that can be used for sharing.
+
+	</div>
+	<div id="footer">
+		This app was created with <a href="https://api.video">api.video</a>.<br/>
+		Get the <a href="https://github.com/dougsillars/blobUpload">sample code</a>, and read about <a href="https://a.video/works/upload-a-video">how we built the demo.</a><br/>
+		More sample apps can be found at <a href="https://a.video">a.video</a>.
+
+	</div>
+	
+	
+	<script>
+	  const input = document.querySelector('#video-file');
+	  
+	  var videoId = "";
+	  var playerUrl = "";
+	  input.addEventListener('change', () => {
+		console.log("upload commencing");
+	    const file = input.files[0];
+		const filename = input.files[0].name;
+		console.log(file, filename);
+		uploadFile(input.files[0]);
+		function uploadFile(files) {
+			const uploader = new VideoUploader({
+				file: input.files[0],
+				//changed to sandbox, becuase we cannot have nice things
+				uploadToken: "to5PoOjCz98FdLGnsrFflnYo",
+				chunkSize: 1024*1024*10, // 10MB
+				retries: 10
+		    });
+			uploader.onProgress((event) => {
+				console.log(`Bytes uploaded so far: ${event.uploadedBytes}.`);
+				console.log(`total size of the file: ${event.totalBytes}.`);
+				var percentComplete = Math.round(event.uploadedBytes / event.totalBytes * 100);
+				document.getElementById("chunk-information").innerHTML = "Chunk # " + event.currentChunk + " is uploaded. Total uploaded: " + percentComplete +"%";
+				console.log(`number of upload chunks: ${event.chunksCount} .`);
+				console.log(`size of a chunk: ${event.chunksBytes}.`);
+				console.log(`index of the chunk being uploaded: ${event.currentChunk}.`);
+				console.log(`number of bytes uploaded for the current chunk: ${event.currentChunkUploadedBytes}.`);
+			})
+			uploader.upload()
+				.then((video) => {
+					console.log(video);
+					playerUrl = video.assets.player;
+					console.log("all uploaded! Watch here: ",playerUrl ) ;
+					document.getElementById("video-information").innerHTML = "all uploaded! Watch the video <a href=\'" + playerUrl +"\' target=\'_blank\'>here</a>" ;
+				});
+		}
+
+		
+	
+	  });
+	</script>
+
+</body>
+
+</html>
