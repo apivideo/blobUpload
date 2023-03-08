@@ -16,7 +16,7 @@ Videos are very large files, and all servers have a limit on filesize upload.  T
 
 The fix is to use the HTML 5 File API to slice the video into smaller bits, and to upload each smaller chunk.
 
-In this demo, videos are split into 1 MB chunks, but larger sizes are ok (at APi.video, we suggest staying under 100MB per chunk). 
+In this demo, videos are split into 1 MB chunks, but larger sizes are ok (at api.video, we suggest staying under 100MB per chunk). 
 
 
 ## Getting started
